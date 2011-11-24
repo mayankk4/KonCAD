@@ -4,48 +4,40 @@ by DA-NanoTrons
 Computer Aided Designing for DNA Origami
 RENDERING · ANALYZING · PROTOTYPING
 
-    Developers
+Developers
     Avinash Parida and Mayank Kandpal
     Final year undergraduate students at DA-IICT, India
 
-    KonCAD is an interactive Computer Aided Designing software focusing on prototyping, rendering and analyzing structural details of DNA Origami structures with complex curvatures.
-    KonCAD initially asks the end-user needs to input the type and size of the structure they wish to study. For example, if the user wishes to generate or study concentric rings, they would be asked to enter the radius of the outermost ring, or if the user wishes to generate concentric square frames, they would be asked the length of the outermost frame they wish to render.
-    Once the user provides these details, an interactive console details the analysis of the structure. The user is provided with structural details as well as a stability analysis of the structure, like number of base pairs in each ring, size of each ring, total number of scaffold used etc.
-    Currently, the software supports rendering and analysis of only 2 Dimensional DNA Origami structures with complex curvatures.
+KonCAD is an interactive Computer Aided Designing software focusing on prototyping, rendering and analyzing structural details of DNA Origami structures with complex curvatures. KonCAD initially asks the end-user needs to input the type and size of the structure they wish to study. For example, if the user wishes to generate or study concentric rings, they would be asked to enter the radius of the outermost ring, or if the user wishes to generate concentric square frames, they would be asked the length of the outermost frame they wish to render. Once the user provides these details, an interactive console details the analysis of the structure. The user is provided with structural details as well as a stability analysis of the structure, like number of base pairs in each ring, size of each ring, total number of scaffold used etc. Currently, the software supports rendering and analysis of only 2 Dimensional DNA Origami structures with complex curvatures.
 
-    Features
-       1. Rendering Image showing number of and positions of Scaffold crossovers in the structure.
-       2. Auto corrects the sizes (radius or length) of the structures according to programmed principles, which ensure maximum stability in the structure.
-       3.Ensures that an m13 strand can create the DNA Origami structure by keeping its scaffold length within 7249 bps.
-       4. Displays the maximum number of Rings that can be formed using the size constraints specified by the user. User can modify the prototype and they may use as many rings as they require from the structure.
-       5. Rendering Image showing number of and positions of stapler crossovers in the structure.
-       6. Interactive ‘Konsole’ with a toolbar having various functions like clear, auto-scroll etc.
-       7. The ‘Konsole’ displays three kinds of messages :
-           7.1 Error messages in Red
-           7.2 Info about structure in White
-           7.3 General interactivity done in Green
-       8. The results can be copied from the console in a single click.
-       9. Currently supports a Curved 2D Concentric Ring and 2D Concentric Square.
+Features
+   1. Rendering Image showing number of and positions of Scaffold crossovers in the structure.
+   2. Auto corrects the sizes (radius or length) of the structures according to programmed principles, which ensure maximum stability in the structure.
+   3.Ensures that an m13 strand can create the DNA Origami structure by keeping its scaffold length within 7249 bps.
+   4. Displays the maximum number of Rings that can be formed using the size constraints specified by the user. User can modify the prototype and they may use as many rings as they require from the structure.
+   5. Rendering Image showing number of and positions of stapler crossovers in the structure.
+   6. Interactive ‘Konsole’ with a toolbar having various functions like clear, auto-scroll etc.
+   7. The ‘Konsole’ displays three kinds of messages :
+       7.1 Error messages in Red
+       7.2 Info about structure in White
+       7.3 General interactivity done in Green
+   8. The results can be copied from the console in a single click.
+   9. Currently supports a Curved 2D Concentric Ring and 2D Concentric Square.
 
 
-    The software has been thoroughly tested and all the validations and calculations seem to be in place. However, in case of any bug or feature request, do feel free to contact either of us, the developers.
+The software has been thoroughly tested and all the validations and calculations seem to be in place. However, in case of any bug or feature request, do feel free to contact either of us, the developers.
 
 
-    Contacts
-    The complete website design, the software logic, the User Interface design and the Software logo are all developed/designed by
-    Avinash Parida avinash3006@gmail.com
-    Mayank Kandpal mayankk4@gmail.com
-
-
-
-    Credits
-    This software was developed as a part of our BIOMOD-2011 Project.
-    Mentors -
+Credits
+   This software was developed as a part of our BIOMOD-2011 Project.
+   
+	Mentors -
         Prof. Manish K. Gupta, DA-IICT, Gandhinagar, India
         Taslimarif Saiyed, NCBS, Bangalore, India
-    Sponsors for BIOMOD
+    
+	Sponsors for BIOMOD
         Microsoft Research India
         Kuliza Technologies
 
-Developed by Mayank Kandpal & Avinash Parida© 2011 DA-NANOTRONS
 
+Developed by Mayank Kandpal(avinash3006@gmail.com) & Avinash Parida(mayankk4@gmail.com) © 2011 DA-NANOTRONS
