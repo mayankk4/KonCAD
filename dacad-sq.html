@@ -1,0 +1,770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>DA-NANOTRONS</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=980, user-scalable=yes" />
+	<link rel="image_src" href="http://dgivens.com/images/logo.png" />
+
+	<link rel="stylesheet" href="css/koncad.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/back.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/reveal.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+	
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" ></script>
+    <script src="js/jquery.numeric.js" type="text/javascript" ></script>
+	<script src="js/addplaceholder.js" type="text/javascript"></script>
+	<script src="js/jquery.reveal.js" type="text/javascript" ></script>
+
+
+	<script type="text/javascript" charset="utf-8">
+		var captionLength =0;
+		var caption = "";
+
+		function testTypingEffect()
+		{
+		  caption = $("input#userCaption").val();
+		  type();
+		}
+
+		function type() 
+		{
+		    $('p.caption').html(caption.substr(0, captionLength++));
+		    if(captionLength < caption.length+1)
+		    {
+		        setTimeout("type()", 50);
+		    }
+		    else {
+		        captionLength = 0;
+		        caption = "";
+		    }   
+		}
+
+		function cursorAnimation() 
+		{
+		  $("p.cursor").animate(
+		  {
+		    opacity: 0
+		  }, "fast", "swing").animate(
+		  {
+		    opacity: 1
+		  }, "fast", "swing");
+		}
+		
+	</script>   
+	
+
+	<script type="text/javascript">
+		
+			var console_buffer = new Array();
+
+			$(document).ready(function() {
+			
+			  	$('input[placeholder]').placeholder();
+		    
+				$(document).bind("contextmenu",function(e){
+			              return false;
+			       });
+
+				// Stuff to do as soon as the DOM is ready;
+				setInterval("buffer_to_console()", 500);
+				setInterval ( "cursorAnimation()", 600 );	
+				
+				$("#user_input").numeric({ negative: false }, function() { console_log_error("Please enter a positive integer or float value only."); this.value = ""; this.focus(); });
+				
+				var refreshIntervalId;
+
+		        //refreshIntervalId = setInterval( scroll_console_down, 500 );
+
+				$('#start_autoscroll').click(function () {
+				        refreshIntervalId = setInterval( scroll_console_down, 500 );
+				        });
+
+				$('#stop_autoscroll').click(function () {
+				           clearInterval(refreshIntervalId);
+				        });		
+				
+					
+					$('#console p:last').remove();					
+					$('#console').append('<p class="blueBox">+-+-+-+-+-+-+</p>');
+					$('#console').append('<p class="blueBox">K&nbsp;o&nbsp;n&nbsp;C&nbsp;A&nbsp;D&nbsp;</p>');
+					$('#console').append('<p class="blueBox">+-+-+-+-+-+-+</p>');
+					$('#console').append('<p>&nbsp;</p>')
+					$('#console').append('<p class="cursor">|</p>');				
+
+					console_log('+-+-+-+-+-+-+-+-+-+-+-+-+');
+					console_log('|D|A|-|N|a|n|o|T|r|o|n|s|');
+					console_log('+-+-+-+-+-+-+-+-+-+-+-+-+');
+
+			}); // end document ready
+			
+			
+			// select text fn goes here
+			
+			function selectElementText(el, win) {
+			    win = win || window;
+			    var doc = win.document, sel, range;
+			    if (win.getSelection && doc.createRange) {
+			        sel = win.getSelection();
+			        range = doc.createRange();
+			        range.selectNodeContents(el);
+			        sel.removeAllRanges();
+			        sel.addRange(range);
+			    } else if (doc.body.createTextRange) {
+			        range = doc.body.createTextRange();
+			        range.moveToElementText(el);
+			        range.select();
+			    }
+			}
+			
+			function scroll_console_down(){
+				$('#console').scrollTop($('#console').height()+1000000);
+			}
+
+			function buffer_to_console(){
+				var firstElement = console_buffer.shift();
+
+				if(firstElement == '<p class="blueBox caption"> >: Processing complete.</p>'){
+					clearInterval(refreshIntervalId);
+					$('#table-wrapper').show('slow');
+
+					//$("#scaffold-1").attr("src","");
+					//$("#scaffold-2").attr("src","");
+					//$("#stapler-1").attr("src","");
+					
+					$('#images-show').show('slow');
+					$('#analysis-report').show('slow');					
+					
+					$('#pdf').removeAttr('disabled');
+					$('#pdf').removeClass('grey');
+					$('#pdf').addClass('orange');
+				}
+
+				$('#console p:last').remove();
+				$('#console').append(firstElement);
+				$('#console').append('<p class="cursor">|</p>');				
+			}
+
+			function console_log(log_message){
+				console_buffer.push('<p class="blueBox caption"> >: '  + log_message + '</p>');	
+			}
+
+			function console_log_error(log_message){
+				console_buffer.push('<p style="color:red" class="blueBox"> >: ' + log_message + '</p>');
+				clearInterval(refreshIntervalId);
+			}
+
+			function console_log_info(log_message){
+				console_buffer.push('<p style="color:white" class="blueBox"> >:' + log_message + '</p>');		
+				
+			}
+
+			function console_log_dot(log_message){
+				console_buffer.push('<span style="color: #55d839;"  class="blueBox">' + log_message + '</span>');
+				
+			}
+
+			function process_input(){
+
+				$('#table-wrapper').hide();
+				$('#images-show').hide();
+				$('#analysis-report').hide();					
+				refreshIntervalId = setInterval( scroll_console_down, 500 );			
+				
+					if($('#user_input').val() !=''){
+						console_log_info('The length of the outermost square that you entered is ' + $('#user_input').val() + ' nm.' );
+
+						var outer_length = $('#user_input').val();			
+						var outer_length = outer_length.replace(/^\s\s*/, '').replace(/\s\s*$/, '');			    									
+						//var intRegex = /^\d+$/;				
+
+
+						//if(intRegex.test(outer_length)) {
+
+							console_log('Processing details of the structure and rendering images ...');
+							console_log_dot('================');
+							console_log_dot('========');
+							console_log_dot('==');
+							console_log_dot('===================');
+
+							// continue here ... 
+
+							var outer_length_original = outer_length;
+							$("#ana-1").html(outer_length_original);
+
+							var perimeter_outer_original  = 4 * outer_length;
+							console_log_info('The perimeter of the outer square is ' + perimeter_outer_original.toFixed(2) + ' nm');
+
+							var bps_outer_original = 3.088 * perimeter_outer_original;
+
+							console_log_info('The base pairs in the outermost square according to your input is ' + bps_outer_original.toFixed(2) + ' bps');
+
+							if(bps_outer_original > 75){
+
+								console_log('The length of the outer ring that you specified meets the minimum requirement for creating a disk.');
+								console_log('Analyzing ... ');
+								console_log_dot('================');
+								console_log_dot('========');
+								console_log_dot('==');
+								console_log_dot('===================');
+
+								console_log('To improve the stability of the design of the structure, the software may modify the length of the outer square by specified by you by +-2.43 nm.');
+
+								var new_bps_outer = (Math.round(bps_outer_original/60)) * 60;
+								var perimeter_outer = Math.round(new_bps_outer*100/3.088)/100; 
+								outer_length = Math.round(perimeter_outer*100/4)/100;
+
+
+								console_log_info('The length of the outermost ring has been modified to ' + outer_length + ' nm');
+								console_log_info('This value is different from the original length that you specified by ' + Math.round((outer_length - outer_length_original)*100)/100 + ' nm');
+								console_log_info('Now the perimeter of the outer ring is ' + perimeter_outer + ' nm');
+								console_log_info('Now the base pairs in the outermost ring are ' + new_bps_outer  + ' bps');
+
+								console_log('ReInitiating calculations ... ');
+								console_log_dot('================');
+								console_log_dot('========');
+								console_log_dot('==');
+								console_log_dot('===================');
+								// outer_length
+								// perimeter_outer
+								// new_bps_outer
+
+								if(new_bps_outer < (7250/2)){
+
+									console_log('Calculating the number of concentric squares that can be formed... ');
+									console_log('Assuming that the distance between adjacent squares is 2.5 nm');
+									console_log_info('Difference in perimeter of two adjacent concentric squares: ' + Math.round(2*3.14*2.5*100)/100 + ' bps, which is approximately a difference of 60 base-pairs between two adjacent rings.');
+
+									console_log('A B-Form DNA has a natural helicity of 10.5 bps per turn. However, in this structure, we can safely assume that the helicity of the DNA strand is slightly flexible. This assumption has been proven valid through previous research.');
+
+									console_log('Calculating the maximum number of squares possible in the structure...');
+									console_log('Assuming that the maximum length of scaffold available to us is 7250 bps.');
+
+									var current_ring_bp = new_bps_outer;
+									var scaffold_length_needed = current_ring_bp;
+									var number_of_rings = 1;
+
+									while( (scaffold_length_needed + current_ring_bp < 7250) && current_ring_bp >= 120){
+										number_of_rings++;
+										current_ring_bp -= 60;
+										scaffold_length_needed += current_ring_bp;
+									}
+
+									var bps_inner = current_ring_bp;
+
+									console_log_info('The Number of concentric squares can fit into the structure is '+ number_of_rings);
+									console_log_info('The scaffold length needed for the structure is '+ scaffold_length_needed);
+
+							
+									$("#ana-6").html(number_of_rings);
+									$("#ana-4").html(scaffold_length_needed);
+									$("#ana-5").html(7249 - parseInt(scaffold_length_needed));
+
+									$("#scaffold-1-1").attr("src","imgs/software/2d_sq/perspective_1/"+number_of_rings+".jpg");
+									$("#scaffold-2-1").attr("src","imgs/software/2d_sq/perspective_2/"+number_of_rings+".jpg");
+
+									$("#scaffold-1-2").attr("src","imgs/software/2d_sq/perspective_1/"+number_of_rings+".jpg");
+									$("#scaffold-2-2").attr("src","imgs/software/2d_sq/perspective_2/"+number_of_rings+".jpg");
+
+									console_log_info('The number of base-pairs in the outermost square are ' + new_bps_outer + ' whereas the number of base-pairs in the innermost square are ' + current_ring_bp);
+
+									console_log('Providing detailed analysis of each square....');
+
+									var current_ring_bp = bps_inner;
+									var ring_number = 1;
+
+									console_log('Clearing Table...');
+
+										while($('#result_table tr').length > 1){
+											$('#result_table tr:last').remove();
+										}
+
+
+									while( current_ring_bp <= new_bps_outer){
+
+										var num_crossovers = 0;
+
+										if(current_ring_bp <= 300){
+											num_crossovers = 6;
+										}else if(current_ring_bp > 360 && current_ring_bp < 720){
+											num_crossovers = 10;
+										}else{
+											num_crossovers = 12;
+										}
+
+										var cur_bp_per_crossover = Math.round((current_ring_bp/num_crossovers));
+										var cur_radius  = Math.round((current_ring_bp)/(2*3.14*3.088)*100)/100;
+
+										var cur_turn_per_crossover = 0;
+										var cur_bps_per_turn = 0;
+
+										if(cur_bp_per_crossover%10 == 0){
+											cur_bps_per_turn = 10;
+											cur_turn_per_crossover = cur_bp_per_crossover/10;
+										}else{
+											// write algo here
+											// find appropriate bps per turn which is closest to 10.5
+											// find turns between 2 consequetive crossovers
+											var test_bps_per_turn_1 = 10.60;
+											var test_bps_per_turn_2 = 10.50;
+
+											console_log('Calculating the modified value of average bps per turn for square ' + ring_number);
+
+											while( (Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*100)/100 > 0.10) && (test_bps_per_turn_1 - (Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*100)/100) > 0.10) && ( Math.round((cur_bp_per_crossover%test_bps_per_turn_2)*100)/100 > 0.1) && (test_bps_per_turn_2 - (Math.round((cur_bp_per_crossover%test_bps_per_turn_2)*100)/100) > 0.10) ){
+
+												//alert('bps per crossover is ' + cur_bp_per_crossover);
+												//alert(test_bps_per_turn_1);
+												//alert(Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*10)/10);
+												//alert(Math.round((65%10.7)*10)/10);
+												//alert(test_bps_per_turn_1 - (Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*10)/10));
+												//alert(test_bps_per_turn_2);
+												//alert(Math.round((cur_bp_per_crossover%test_bps_per_turn_2)*10)/10);
+
+												test_bps_per_turn_1 = (test_bps_per_turn_1 + 0.01);
+												test_bps_per_turn_2 = (test_bps_per_turn_2 - 0.01);
+											}
+
+											if( (Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*100)/100 <= 0.10) || ( test_bps_per_turn_1 - (Math.round((cur_bp_per_crossover%test_bps_per_turn_1)*100)/100) <= 0.10) ){
+												cur_bps_per_turn = Math.round(test_bps_per_turn_1*100)/100;
+												console_log_info('The modified value of average bps per turn for square ' + ring_number + ' is ' + cur_bps_per_turn);
+												cur_turn_per_crossover = Math.round(((cur_bp_per_crossover/cur_bps_per_turn)*100)/100);
+
+											}else{
+												cur_bps_per_turn = Math.round(test_bps_per_turn_2*100)/100;
+												console_log_info('The modified value of average bps per turn for square ' + ring_number + ' is ' + cur_bps_per_turn);
+												cur_turn_per_crossover = Math.round(((cur_bp_per_crossover/cur_bps_per_turn)*100)/100);
+											}								
+
+										}
+
+										$('#result_table').append('<tr><td>' + ring_number + '</td><td>'+ current_ring_bp + '</td><td>'+ num_crossovers + '</td><td>'+ cur_radius + '</td><td>'+ cur_bp_per_crossover + '</td><td>'+ cur_turn_per_crossover + '</td><td>'+ cur_bps_per_turn + '</td></tr>');
+
+										current_ring_bp += 60;
+										ring_number++;
+									}
+
+									console_log('Processing complete.');
+									console_log('Scroll down for analysis reports.');
+									console_log('====================================================================');
+
+								}else{ // available scaffold not large enough to make structure
+									console_log_error('The length of the outer square that you specified exceeds the maximum allowed size of the scaffold.');
+								}
+
+
+
+							}else{ // the number of base pairs is too less to create the structure
+								console_log_error('The length of the outer square you specified is insufficient to create the structure. Please specify a larger value for Outer Radius.');						
+							}
+
+						//}else{ // user input is not a number
+						//	console_log_error('Please enter a numeric value for the Outer Radius of the disc that you want to study.');				
+						//}
+
+
+					}else{ // user input is empty
+						console_log_error('Please enter the value of length of the outer square of the structure you want to study.');
+					}
+				}
+
+		</script>
+		
+		
+		
+		
+	<script type="text/javascript" charset="utf-8">
+	function removeByClass(className) {
+	   $("."+className).remove();
+	   console_log("console has been cleared");
+	}
+	
+	
+	</script>
+
+	<style type="text/css" media="screen">
+		
+		#console {
+		    margin: 1em 0 0;
+		    padding: .25em 0;
+		    height: 400px;
+		    background: #1f140d;
+		    overflow-x: hidden;
+			overflow-y: auto;
+			border: 5px solid #999;
+		}
+
+		#console div {
+		    padding-bottom: 15px;
+		}
+
+		#console div.line {
+		    margin-bottom: 5px;
+		    padding: 0;
+		}
+
+		#console input.readLine {
+		    border-bottom: 4px solid #1f140d;
+		    font-size: 100%;
+		}
+
+		#console input {
+		    width: 880px;
+		    margin: 1px 0 1px 10px;
+		    border: none;
+		    display: inline;
+		    padding: 2px;
+		    background: #1f140d;
+		    color: #55d839;
+		    font-size: 100%;
+		    font-family: Monaco, monospace;
+		}
+
+		#console p, #console pre {
+		    margin: 2px;
+		    padding: 0 8px;
+		    color: #55d839;
+		    font-size: 12px;
+		    font-family: \Monaco, monospace;
+		}
+
+		#console a {
+		    color:  #55d839;
+		}
+
+		#console span.prompt {
+		    color: #55d839;
+		    font-size: 93%;
+		    margin-left: 12px;
+		}
+
+	</style>
+
+	<style type="text/css" media="screen">
+		#container{
+			float:left;
+		}
+		
+		#images-show{
+			height: 100%;
+			width: 270px;
+			float: left;
+		}
+		
+		.custom-button{
+		 padding: 0px 6px 0px 6px;
+		 margin: 5px 0 0 20px;
+		 height: 22px;
+		 -webkit-border-radius:3px;
+		 -moz-border-radius:3px;
+		 border-radius:3px;
+		 font-family: Verdana, Arial, sans-serif;
+		 font-weight: bold;
+		 border :0;
+		 font-size: 10px;
+		 color: #FFFFFF;
+		 cursor:pointer;
+		 text-transform:uppercase;
+		 text-decoration:none;
+		}
+		
+			.custom-button-render{
+			 padding: 3px 6px 3px 6px;
+			 margin: 20px 0 0 20px;
+			 height: 30px;
+			 width:220px;
+			 -webkit-border-radius:5px;
+			 -moz-border-radius:5px;
+			 border-radius:5px;
+			 font-family: Verdana, Arial, sans-serif;
+			 font-weight: bold;
+			 border :0;
+			 font-size: 13px;
+			 color: #FFFFFF;
+			 cursor:pointer;
+			 text-transform:uppercase;
+			 text-decoration:none;
+			}
+		
+		.orange{
+			 background: #DB6719;
+		}
+		
+		.red{
+			background: #eb4a36;
+		}
+		
+		.green{
+			background-color: #2fbe79;
+		}
+		
+		.blue{
+			background-color: #28b1de;
+		}
+		
+		.bluex {
+			color: #28b1de;
+		}
+		.grey{
+			background-color: #ddd;
+		}
+		
+		#table-wrapper{
+			width: 950px;
+			padding: 30px 0 0 0;
+		}
+		
+		
+		.image-style{
+		
+		border: 4px solid #ddd;
+		width:250px;
+		}
+		
+	</style>
+
+</head>
+<body>
+<div id="container">
+	<div id="logo"><a href="http://openwetware.org/wiki/Biomod/2011/DAIICT/DANanoTrons"><img src="imgs/kc-logo-with-dananotrons.gif" height="150" alt="Kc Logo With Dananotrons"></a>
+	<p>
+		<span style="font-size:50px;">KonCAD</span><br/>
+		<span style="font-size:20px">by DA-NanoTrons</span><br/><br/>
+		<span style="font-size:14px;">Computer Aided Designing for <font color="red">DNA Origami</font></span><br/>
+			<span style="font-size:10px">RENDERING &middot; ANALYZING &middot; PROTOTYPING</span></p>
+	</div>
+	
+	<ul id="menu">
+		<li class="nav"><a href="dacad.html">Curved 2D concentric Rings</a></li>
+		<li class="nav"><a href="dacad-sq.html">2D Concentric Square</a></li>
+		<li class="nav"><a href="http://openwetware.org/wiki/Biomod/2011/DAIICT/DANanoTrons" target="_blank">Project Wiki</a></li>
+		<li class="nav"><a href="http://openwetware.org/images/8/80/Software_user_manual.txt" target="_blank">Download User Manual</a></li>
+		<li class="nav">
+		
+			<a href="#" class="big-link " data-reveal-id="myModal" data-animation="fade">	
+				About
+				</a>
+
+						<div id="myModal" class="reveal-modal" style="text-align:left;font-size:12px;font-family: Tahoma, Helvetica;">
+							<h2><b>Software Documentation - KonCAD</b></h2><br/>
+							
+
+							<p><b>Developers</b> </p> 
+							<p><i>Avinash Parida and Mayank Kandpal</i></p> 
+							<p>Final year undergraduate students at DA-IICT, India</p><br/>
+							
+
+							<p><strong>KonCAD</strong> is an interactive Computer Aided Designing software focusing on prototyping, rendering and analyzing structural details of <strong>DNA Origami</strong> structures with complex curvatures. </p><br/>
+							
+
+							<p><strong>KonCAD</strong> initially asks the end-user needs to input the type and size of the structure they wish to study. For example, if the user wishes to generate or study concentric rings, they would be asked to enter the radius of the outermost ring, or if the user wishes to generate concentric square frames, they would be asked the length of the outermost frame they wish to render. </p><br/>
+							
+
+							<p>Once the user provides these details, an interactive console details the analysis of the structure. The user is provided with structural details as well as a <strong>stability analysis</strong> of the structure, like number of base pairs in each ring, size of each ring, total number of scaffold used etc. </p><br/>
+							
+
+							<p>Currently, the software supports rendering and analysis of only 2 Dimensional DNA Origami structures with complex curvatures.</p><br/>
+							
+
+							<p><strong>Features</strong></p>
+							<ul>
+								<li>Rendering Image showing number of and positions of Scaffold crossovers in the structure.</li>
+								<li>Auto corrects the sizes (radius or length) of the structures according to programmed principles, which ensure maximum stability in the structure.</li>
+								<li>Ensures that an m13 strand can create the DNA Origami structure by keeping its scaffold length within 7249 bps.</li>
+								<li>Displays the maximum number of Rings that can be formed using the size constraints specified by the user. User can modify the prototype and they may use as many rings as they require from the structure.</li>
+								<li>Rendering Image showing number of and positions of stapler crossovers in the structure.</li>
+								<li>Interactive <strong>‘Konsole’</strong> with a toolbar having various functions like clear, auto-scroll etc.</li>
+								<li>The <strong>‘Konsole’</strong> displays three kinds of messages :
+									<ol>
+										<li>Error messages in Red</li>
+										<li>Info about structure in White</li>
+										<li>General interactivity done in Green</li>
+										
+									</ol>
+								</li>
+								<li>he results can be copied from the console in a single click.</li>
+								<li>Currently supports a Curved 2D Concentric Ring and  2D Concentric Square.</li>
+							</ul>
+						
+							<br /><br /><p>The software has been thoroughly tested and all the validations and calculations seem to be in place. However, in case of any bug or feature request, do feel free to contact either of us, the developers.</p><br/>
+
+
+								<p><strong>Contacts</strong> </p>
+								<p>The complete website design, the software logic, the User Interface design and the Software logo are all developed/designed by</p>
+							<p>	<span>Avinash Parida</span><span> <a href="mailto:avinash3006@gmail.com?subject=KonCAD Feedback" style="color:#28b1de;font-size:12px;">avinash3006@gmail.com</a></span></p>
+							<p>	<span>Mayank Kandpal</span> <span><a href="mailto:mayankk4@gmail.com?subject=KonCAD Feedback" style="color:#28b1de;font-size:12px;">mayankk4@gmail.com</a></span></p><br/>
+
+
+								<p><strong>Credits</strong></p>
+								<p>This software was developed as a part of our BIOMOD-2011 Project.<p>
+								<p>Mentors - 
+									<ul>
+									<li>Prof. Manish K. Gupta, DA-IICT, Gandhinagar, India</li>
+									<li>Taslimarif Saiyed, NCBS, Bangalore, India</li>
+									</ul>
+								</p>
+								<p>Sponsors for BIOMOD
+									<ul> 
+										<li>Microsoft Research India</li>
+										<li>Kuliza Technologies</li>
+									</ul>
+								</p>
+															
+							<a class="close-reveal-modal">&#215;</a>
+						</div>
+			
+		</li>
+	</ul>
+
+
+
+<div id="blogcontent">
+
+	<ul class="tidbit">
+	
+		<li style="width:300px;margin-right:20px;">
+			<span class="title">KonCAD - 2D Concentric square frames with sharp outer and inner edges.</span>
+	
+		<div id='user_response'>
+			 <p style="text-align:left;margin-bottom:10px"><b>Enter the length of the of the outermost square of the concentric square frame structure with sharp outer and inner corners.</b> <br/>
+			<span style="padding:10px 0 0px 0;">&nbsp; 
+			<div class="input-append" style="margin:0 0 0 30px;padding:0;">
+				<input class="medium" id="user_input" name="prependedInput"  placeholder="Outer Square frame length" size="16" type="text" style="height:22px;width:150px;"><span class="add-on">nm</span>
+			</div>	
+				<br/>
+				<input type="button"  class="custom-button-render green" onclick="process_input()" value="RENDER"></p>
+				<p style="font-size:10px;text-transform:uppercase;color:#444;">The length of the outermost square frame that you specify might be altered by +-2.10 nm in order to improve the stability of the design.</p>
+		</div>
+
+
+
+		<input type="button" class="custom-button-render grey" name="name" style="margin:0 0 0 20px" value="Select Analysis" id="pdf" onclick="selectElementText(document.getElementById('console'));" disabled="disabled"/>
+
+	    </li>
+
+
+
+		<li style="width:600px;margin-right:0px;">
+		<span class="title" style="padding-bottom:0px;">Konsole  
+		<input type="button"  class="custom-button red" value="Clear" onclick="removeByClass('blueBox');"> 
+		<!-- <input type="button"  class="custom-button blue" value="COPY TO CLIP" id="copy-dynamic" > 		 -->
+		<span style="float:right"><input type="button" class="custom-button orange" name="start_autoscroll" value="Start Auto-Scroll" id="start_autoscroll">
+		<input type="button" class="custom-button orange" name="stop_autoscroll" value="Stop Auto-Scroll" id="stop_autoscroll"></span>
+		</span>
+		
+		
+		<div id='console' style="height:300px;">
+
+		 		<p class="cursor">|</p>		  
+		</div>
+
+		</li>
+
+	</ul>
+	
+</div>
+
+<div id="table-wrapper" style="display:none;">
+			<h1>Analysis of each ring in the structure</h1><br/>
+			<div id='result_table_wrapper' >
+					<table id="result_table" class="zebra-striped">
+		
+					<tr>
+						<th class="header">Ring Number</th>
+						<th>Base Pairs (bps)</th>
+						<th>No. of crossovers</th>
+						<th>Radius (nm)</th>
+						<th>bps/crossover</th>
+						<th>Turns/crossovers</th>
+						<th>bps/turn </th>
+					</tr>
+		
+					</table>
+			</div>
+</div>
+
+
+
+	<div id="analysis-report"  style="display:none;">
+		<h1>More details about the structure</h1><br />
+
+		<p style="font-size:14px">
+			The length of the outer-most square that you entered is <span id="ana-1"></span> nm.
+			 The length has been modified to <span id="ana-2"></span> nm.
+			 The Number of square frames which can fit into the structure is <span id="ana-6"></span>.
+			 The total size of scaffold used by your structure is <span id="ana-4"></span> bps.
+			 The number of base-pairs of m13 left unused are <span id="ana-5"></span> bps.
+		</p>
+
+</div><!-- #analysis-report -->
+
+
+
+
+
+<div id="footer" style="clear:both;">
+<span id="devs">Developed by <a href="https://twitter.com/mayank_kandpal" target="_blank" style="color:#28b1de;font-size:10px;">Mayank Kandpal</a> & <a href="https://twitter.com/theParida" target="_blank" style="color:#28b1de;font-size:10px;" title="">Avinash Parida</a></span><span id="copyright">&copy; 2011 DA-NANOTRONS</span>
+<!--close container-->
+</div>
+</div>
+
+
+
+<div id="images-show" style="display:none;">
+	<div id="dummy-block" style="height:200px;">
+		
+	</div><!-- #dummy-block -->
+
+	<div class="img-div">
+		<a href="#" class="big-link " data-reveal-id="image-1" data-animation="fade">	
+			<img id="scaffold-1-1" src="#"  alt="img" class="image-style">
+			<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Scaffold crossovers in your structure.</b></p>
+		</a>
+			
+					<div id="image-1" class="reveal-modal">
+							<img id="scaffold-1-2" src="#"  alt="img" >
+							<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Scaffold crossovers in your structure.</b></p>
+						<a class="close-reveal-modal">&#215;</a>
+					</div>
+	
+	</div>
+
+
+	<div class="img-div">
+		<a href="#" class="big-link " data-reveal-id="image-2" data-animation="fade">	
+			<img id="scaffold-2-1" src="#"  alt="img" class="image-style">
+			<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Scaffold crossovers in your structure, from a different perspective.</b></p>
+		</a>
+			
+					<div id="image-2" class="reveal-modal">
+							<img id="scaffold-2-2" src=""  alt="img" >
+							<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Scaffold crossovers in your structure, from a different perspective.</b></p>
+						<a class="close-reveal-modal">&#215;</a>
+					</div>	
+	</div>
+
+
+	<!-- div class="img-div">
+		<a href="#" class="big-link " data-reveal-id="image-3" data-animation="fade">	
+			<img id="stapler-1-1" src="#"  alt="img" class="image-style">
+			<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Stapler crossovers in your structure.</b></p>
+		</a>
+			
+					<div id="image-3" class="reveal-modal">
+							<img id="stapler-1-2" src=""  alt="img" >
+							<p class="img-text" style="padding:0 0 5px 0;text-align:center;font-size:12px;font-weight:normal;color:#333"><b>Positions of Stapler crossovers in your structure.</b></p>
+						<a class="close-reveal-modal">&#215;</a>
+					</div>
+	
+	</div -->
+
+	
+</div>
+	
+</body>
+</html>
+
+
+
+<!-- Localized -->
